@@ -17,7 +17,7 @@ const TopicsSideBar: FC<TopicsSideBarProps> = ({ topics }) => {
           </Button>
         </Link>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {topics.map((topic) => (
           <li
             key={topic.id}
