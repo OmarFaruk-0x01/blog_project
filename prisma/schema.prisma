@@ -1,0 +1,93 @@
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  password Password?
+  posts    Post[]
+}
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Post {
+  id         String  @id @default(cuid())
+  title      String
+  body       String
+  short_body String
+  slug       String? @default(dbgenerated())
+  status     Status
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  featured_image Images?
+  topics         Topics[]
+
+  @@unique([slug])
+  @@index([id])
+}
+
+model Images {
+  id       String  @id @default(cuid())
+  src      String
+  Post     Post?   @relation(fields: [postId], references: [id])
+  postId   String? @unique
+  Book     Book?   @relation(fields: [bookId], references: [id])
+  bookId   String? @unique
+  publicId String  @default("")
+
+  @@index([id])
+}
+
+model Topics {
+  id    String @id @default(cuid())
+  label String
+  slug  String
+
+  posts Post[]
+
+  @@unique([slug])
+  @@unique([label])
+  @@index([id])
+}
+
+model Book {
+  id          String  @id @default(cuid())
+  title       String
+  author      String
+  publication String
+  slug        String
+  published   String
+  thumbnail   Images?
+  pages       String?
+  description String?
+  preview_url String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Status {
+  Published
+  Draft
+}

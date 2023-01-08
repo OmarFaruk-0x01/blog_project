@@ -1,0 +1,63 @@
+{
+  "include": [
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "public/build",
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019"
+    ],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "app/src/components/*"
+      ],
+      "@ui/*": [
+        "app/src/ui-components/*"
+      ],
+      "@hooks/*": [
+        "app/src/hooks/*"
+      ],
+      "@interfaces/*": [
+        "app/src/interfaces/*"
+      ],
+      "@layout/*": [
+        "app/src/layout/*"
+      ],
+      "@helpers/*": [
+        "app/src/helpers/*"
+      ],
+      "@icons/*": [
+        "app/src/icons/*"
+      ],
+      "@store/*": [
+        "app/src/store/*"
+      ],
+      "@configs/*": [
+        "app/src/configs/*"
+      ],
+      "@/*": [
+        "./app/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
